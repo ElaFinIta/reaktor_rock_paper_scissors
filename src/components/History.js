@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FetchWrapper } from './fetch-wrapper';
-import Spinner from 'react-bootstrap/Spinner';
 import Table from 'react-bootstrap/Table';
-import PlayerStatsCard from './PlayerStatsCard';
 import '../index.css';
 import paper from './assets/hand-paper-solid.svg';
 import rock from './assets/hand-rock-solid.svg';
 import scissors from './assets/hand-scissors-solid.svg';
 
-// const url = 'https://bad-api-assignment.reaktor.com';
+const url = 'https://bad-api-assignment.reaktor.com';
 const historyEndpoint = '/rps/history';
 const API = new FetchWrapper(url);
 
 const History = () => {
-    const [isLoading, setIsLoading] = useState(true);
     const [games, setGames] = useState([]);
     const [players, setPlayers] = useState([]);
-    const [playerChosen, setPlayerChosen] = useState("");
-    const [playerGames, setPlayerGames] = useState({});
 
     let page = 0;
 
@@ -40,7 +35,20 @@ const History = () => {
                 console.error(err);
             }
             console.log('page', page);
-            setIsLoading(false);
+        }
+    }
+
+    const getPlayers = () => {
+        if (games) {
+            games.map((game) => {
+                if (!players.includes(game.playerA.name)) {
+                    setPlayers(players => [...players, game.playerA.name]);
+                }
+                if (!players.includes(game.playerB.name)) {
+                    setPlayers(players => [...players, game.playerB.name]);
+                }
+                return true; 
+            })
         }
     }
 

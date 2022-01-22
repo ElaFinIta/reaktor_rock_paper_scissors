@@ -6,7 +6,6 @@
 
 .App {
   text-align: center;
-  /* background-color: #282c34; */
   background-color: whitesmoke;
 }
 
@@ -18,7 +17,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #282c34;
 }
 
 .history {
@@ -27,25 +26,9 @@
 
 a,
 p {
-  color: #61dafb;
+  color: #282c34;
 }
 
-.card_wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-
-.stats_card {
-  align-self: center;
-  min-width: 12rem;
-  width: auto;
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.stats_card h1 {
-  color: white;
+td img {
+  width: 2rem;
 }
