@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Rock-paper-scissors match results from API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Steps
+1. [x] get a response from the history endpoint https://bad-api-assignment.reaktor.com/rps/history
+Error message:
+Access to fetch at 'https:...' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+Dirty workaround that won't work in production:
+Chrome CORS extension: adds the Access-Control-Allow-Origin: * header to all responses.
 
-In the project directory, you can run:
+2. [x] Get list of players from the first page of history data: match results displayed vary, not a static page. Players for the first page are 150+
+3. [x] Put players into hook
+4. [x] Get stats for selected player
+4. [ ] Show stats decently
+3. [ ] Get total number of data pages to check how many they are
+4. [ ] Get all player from history pages
+5. [ ]
+6. [ ]
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Task
 
-### `npm test`
+Your task is to implement a web application that displays rock-paper-scissors match results. The web application must display the games as they are in progress, and you must also be able to look at historical results of individual players. In addition, the currently ongoing games must be visible at all times.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The historical results must include all games that a player has played and it must also include the following aggregate data: win ratio, total number of matches played, and the most played hand (rock, paper, or scissors).
 
-### `npm run build`
+There are two API endpoints running at https://bad-api-assignment.reaktor.com. /rps/history which returns a page of historical data, and a path for the next page of data. Be aware that there are many pages of data. The other endpoint /rps/live is a WebSocket API and will send events to connected clients as they happen.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Your application does not need to look especially pretty (but it won’t hurt) but it should be fast and snappy, showing data to the end user as fast as possible and being up-to-date with the backend.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+In no particular order, we especially pay attention to the following details when looking at your submission:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Readability of the code as whole
+- Performance and maintainability
+- Technology and library choices made
+- User interface and experience
 
-### `npm run eject`
+### Credits:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Scissors, rock, paper icons from Font Awasome. License: https://fontawesome.com/license
