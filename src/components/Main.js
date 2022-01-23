@@ -6,6 +6,7 @@ import paper from './assets/hand-paper-solid.svg';
 import rock from './assets/hand-rock-solid.svg';
 import scissors from './assets/hand-scissors-solid.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LiveGames from './LiveGames';
 
 const url = 'https://bad-api-assignment.reaktor.com';
 const historyEndpoint = '/rps/history';
@@ -19,14 +20,10 @@ const Main = () => {
     let page = 0;
     let allTimePlayers = [];
 
-    const getKeyByValue = (object, value) => {
-        return object.keys(object).find(key => object[key] === value);
-    }
-
     const getGames = (cursor, historyGames = []) => {
         if (page < pagesToFetch) {  // max number of pages to fetch (total 1468 ca)
             try {
-                console.log('page', page);
+                // console.log('page', page);
                 // recursion to get all historical data
                 return API.get(cursor ? cursor : historyEndpoint)
                     .then(response => response.json()) 
@@ -35,7 +32,7 @@ const Main = () => {
                         historyGames.push.apply(historyGames, results.data);
                         setGames(games => [...games, historyGames].flat());
                         page += 1;
-                        console.log('historyGames:', historyGames);
+                        // console.log('historyGames:', historyGames);
                         for (let game of historyGames) {
                             // add player if not in list
                             if (!allTimePlayers.some(player => player.name === game.playerA.name)) {
@@ -56,7 +53,6 @@ const Main = () => {
                             // updating wins ratio
                             && (player.winRatio = player.wins/player.totGames) 
                             // updating most played hand
-                        //    && (player.hands.mostPlayed = getKeyByValue(player.hands, Math.max(player.hands['PAPER'], player.hands['SCISSORS'], player.hands['ROCK'])))
                             && ((player.hands.SCISSORS > player.hands.ROCK && player.hands.SCISSORS > player.hands.PAPER) ? player.hands.mostPlayed = 'SCISSORS' :
                             (player.hands.ROCK > player.hands.SCISSORS &&  player.hands.ROCK > player.hands.PAPER) ? (player.hands.mostPlayed = 'ROCK') :
                             (player.hands.PAPER> player.hands.SCISSORS &&  player.hands.PAPER > player.hands.ROCK) ? (player.hands.mostPlayed = 'PAPER') : 'unknown')
@@ -69,8 +65,8 @@ const Main = () => {
                             && (player.hands[game.playerB.played] += 1)
                             && ((compareHands(game.playerB.played, game.playerA.played) === 'won') ? (player.wins += 1) : 'unknown') 
                             // updating wins ratio
-                            && (player.winRatio = (player.wins/player.totGames)) // updating most played hand
-                            // && (player.hands.mostPlayed = getKeyByValue(player.hands, Math.max(player.hands['PAPER'], allTimePlayers.hands['SCISSORS'], player.hands['ROCK'])))
+                            && (player.winRatio = (player.wins/player.totGames))
+                            // updating most played hand
                             && ((player.hands.SCISSORS > player.hands.ROCK && player.hands.SCISSORS > player.hands.PAPER) ? player.hands.mostPlayed = 'SCISSORS' :
                             (player.hands.ROCK > player.hands.SCISSORS &&  player.hands.ROCK > player.hands.PAPER) ? (player.hands.mostPlayed = 'ROCK') :
                             (player.hands.PAPER> player.hands.SCISSORS &&  player.hands.PAPER > player.hands.ROCK) ? (player.hands.mostPlayed = 'PAPER') : 'unknown')
@@ -84,8 +80,6 @@ const Main = () => {
             }
         }         
         setPlayers(players => allTimePlayers.filter(player => !players.includes(player)));
-        console.log('allTimePlayers', allTimePlayers);
-        console.log('players', players);
     }
 
     const compareHands = (firstPlayer, opponent) => {
@@ -126,29 +120,30 @@ const Main = () => {
                             <th>Total games</th>
                             <th>Wins</th>
                             <th>Win ratio</th>
-                            <th>ROCK</th>
-                            <th>PAPER</th>
-                            <th>SCISSORS</th>
+                            <th>{<img src={rock} alt='rock'/>}</th>
+                            <th>{<img src={paper} alt='paper'/>}</th>
+                            <th>{<img src={scissors} alt='scissor'/>}</th>
                             <th>Most played</th>
                         </tr>
                     </thead>
                     <tbody>
                         {players ? (players.map((player, i) => {
                             return (<tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{player ? player.name : '---'}</td>
-                            <td>{player ? player.totGames : '---'}</td>
-                            <td>{player ? player.wins : '---'}</td>
-                            <td>{player ? (Math.round(player.winRatio  * 100) / 100).toFixed(2) : '---'}</td>
-                            <td>{player.hands.ROCK}</td>
-                            <td>{player.hands.PAPER}</td>
-                            <td>{player.hands.SCISSORS}</td>
-                            <td><img src={player.hands.mostPlayed==='ROCK' ? rock : player.hands.mostPlayed==='SCISSORS' ? scissors : player.hands.mostPlayed==='PAPER' ? paper : 'unknown'} alt={player.hands.mostPlayed}/></td>
+                                        <td>{i+1}</td>
+                                        <td>{player ? player.name : '---'}</td>
+                                        <td>{player ? player.totGames : '---'}</td>
+                                        <td>{player ? player.wins : '---'}</td>
+                                        <td>{player ? (Math.round(player.winRatio  * 100) / 100).toFixed(2) : '---'}</td>
+                                        <td>{player.hands.ROCK}</td>
+                                        <td>{player.hands.PAPER}</td>
+                                        <td>{player.hands.SCISSORS}</td>
+                                        <td><img src={player.hands.mostPlayed==='ROCK' ? rock : player.hands.mostPlayed==='SCISSORS' ? scissors : player.hands.mostPlayed==='PAPER' ? paper : 'unknown'} alt={player.hands.mostPlayed}/></td>
                             </tr>)
                         })) : 'unknown'}
                     </tbody>
                 </Table>
             </div>
+            <LiveGames />
         </div>
     );
 };

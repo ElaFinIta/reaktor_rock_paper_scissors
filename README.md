@@ -39,7 +39,7 @@ Chrome CORS extension: adds the Access-Control-Allow-Origin: * header to all res
 Attempted to slow down fetches with setTimeout() but it turned out to be to slow. Only fetching a small amount of pages (20) at first stage of development.
 7. [x] Show stats decently. Icons showing too, yay! :D
 8. [ ] Add sorting for stats
-9. [ ] Show live games from websocket :D Tic tac, tic tac...  time is unfortunately olmsot over.
+9. [ ] Show live games from websocket :D Tic tac, tic tac...  time is unfortunately almost over.
 
 ## Self-assessment
 

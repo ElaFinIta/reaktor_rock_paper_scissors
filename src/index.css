@@ -21,6 +21,7 @@
 }
 
 .main {
+  width: 100vw;
   min-height: 80vh;
   display: flex;
 }
@@ -30,17 +31,21 @@ p {
   color: #282c34;
 }
 
-td img {
-  width: 1.7rem;
+
+/**** History and live games area ****/
+.main {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .history {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 60vw;
 }
 
-.history h2 {
+.history h2,
+.live_games h2 {
   font-size: 1.2rem;
 }
 
@@ -49,7 +54,26 @@ td img {
 }
 
 .history_table {
-  margin: 2rem !important;
+  margin-left: 1rem !important;
+  max-width: 50vw;
+}
+
+th img {
+  width: 1.7rem !important;
+}
+
+td img {
+  width: 1.7rem;
+}
+
+.live_games {
+  display: flex;
+  flex-direction: column;
+  max-width: 40vw;
+}
+
+.live_table {
+  margin-right: 1rem;
 }
 
 /****  Footer area *****/
