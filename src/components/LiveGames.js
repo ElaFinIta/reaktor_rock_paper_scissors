@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../index.css';
 import Table from 'react-bootstrap/Table';
-import paper from './assets/hand-paper-solid.svg';
-import rock from './assets/hand-rock-solid.svg';
-import scissors from './assets/hand-scissors-solid.svg';
 
 const webSocketUrl = 'ws://bad-api-assignment.reaktor.com/rps/live';
 
