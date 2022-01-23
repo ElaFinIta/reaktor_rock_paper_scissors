@@ -38,8 +38,13 @@ Chrome CORS extension: adds the Access-Control-Allow-Origin: * header to all res
 6. [x] Get all players (170) from history pages. After 499 pages fetched >>> 420 error (Too Many Requests)
 Attempted to slow down fetches with setTimeout() but it turned out to be to slow. Only fetching a small amount of pages (20) at first stage of development.
 7. [x] Show stats decently. Icons showing too, yay! :D
-8. [ ] Add sorting for stats
-9. [ ] Show live games from websocket :D Tic tac, tic tac...  time is unfortunately almost over.
+8. [x] Show live games from websocket :D
+9. [ ] Get all and updated history data. Tic tac, tic tac...  time is unfortunately almost over.
+10. [ ] Add sorting for stats...
+
+## Screenshots:
+
+![screenshot of the paper-rock-scissors UI](screenshot.png?raw=true "screenshot of the paper-rock-scissors UI")
 
 ## Self-assessment
 
