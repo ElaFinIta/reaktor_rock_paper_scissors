@@ -1,22 +1,6 @@
 # Rock-paper-scissors match results from API
 
-
-## Steps
-1. [x] get a response from the history endpoint https://bad-api-assignment.reaktor.com/rps/history
-Error message:
-Access to fetch at 'https:...' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-Dirty workaround that won't work in production:
-Chrome CORS extension: adds the Access-Control-Allow-Origin: * header to all responses.
-
-2. [x] Get list of players from the first page of history data: match results displayed vary, not a static page. Players for the first page are 150+
-3. [x] Put players into hook
-4. [x] Get stats for selected player
-4. [ ] Show stats decently
-3. [ ] Get total number of data pages to check how many they are
-4. [ ] Get all player from history pages
-5. [ ]
-6. [ ]
-
+A pre-assignment for Reaktor summer 2022 developer 
 
 
 ### Task
@@ -36,6 +20,40 @@ In no particular order, we especially pay attention to the following details whe
 - Technology and library choices made
 - User interface and experience
 
+## Technology and libraries
+- REACT
+- React-boostrap for Table
+
+## Steps
+1. [x] get a response from the history endpoint https://bad-api-assignment.reaktor.com/rps/history
+Error message:
+Access to fetch at 'https:...' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+Dirty workaround that won't work in production:
+Chrome CORS extension: adds the Access-Control-Allow-Origin: * header to all responses.
+
+2. [x] Get list of players from the first page of history data: match results displayed vary, not a static page. Players for the first page are 150+
+3. [x] Put players into hook
+4. [x] Get stats for selected player
+5. [x] Get total number of data pages to check how many they are: 1460+
+6. [x] Get all players (170) from history pages. After 499 pages fetched >>> 420 error (Too Many Requests)
+Attempted to slow down fetches with setTimeout() but it turned out to be to slow. Only fetching a small amount of pages (20) at first stage of development.
+7. [x] Show stats decently. Icons showing too, yay! :D
+8. [ ] Add sorting for stats
+9. [ ] Show live games from websocket :D Tic tac, tic tac...  time is unfortunately olmsot over.
+
+## Self-assessment
+
+This assignment was great fun and also a bit of a pain :D
+I learned a lot and I'm looking forwards to seeing a model solution. 
+
+- Readability of the code as whole: some parts are neat and clean, some others horrible and I won't probably be able to read them myself in a couple of weeks
+- Performance and maintainability: not fetching ALL historical data. I wonder how it is properly done. I really would like to see a model solution for it. Websocket was totally unknow to me.
+- Technology and library choices made: REACT and a little bit of bootstrap fro the Table to practise it. I did not invest much time in CSS.
+-  User interface and experience: to be improved >>> user could be able to select a player. Sorting the list would also be nice.
+
+
+
 ### Credits:
 
 - Scissors, rock, paper icons from Font Awasome. License: https://fontawesome.com/license
+- emotional support from Business College Helsinki Full Stack programme dear fellow students :D https://github.com/SaaraLeppis, https://github.com/martin-holland, https://github.com/KatiRemo
