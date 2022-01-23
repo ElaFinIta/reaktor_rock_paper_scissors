@@ -31,6 +31,9 @@ p {
   color: #282c34;
 }
 
+h1 {
+  font-family: 'Press Start 2P', cursive;
+} 
 
 /**** History and live games area ****/
 .main {
