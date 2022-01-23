@@ -20,8 +20,9 @@
   color: #282c34;
 }
 
-.history {
+.main {
   min-height: 80vh;
+  display: flex;
 }
 
 a,
@@ -30,5 +31,23 @@ p {
 }
 
 td img {
-  width: 2rem;
+  width: 1.7rem;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+}
+
+.history h2 {
+  font-size: 1.2rem;
+}
+
+.history h3 {
+  font-size: 1rem;
+}
+
+.history_table {
+  margin: 2rem !important;
 }

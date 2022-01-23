@@ -5,95 +5,79 @@ import '../index.css';
 import paper from './assets/hand-paper-solid.svg';
 import rock from './assets/hand-rock-solid.svg';
 import scissors from './assets/hand-scissors-solid.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const url = 'https://bad-api-assignment.reaktor.com';
 const historyEndpoint = '/rps/history';
 const API = new FetchWrapper(url);
+const pagesToFetch = 10;
 
 const History = () => {
     const [games, setGames] = useState([]);
     const [players, setPlayers] = useState([]);
 
     let page = 0;
+    let allTimePlayers = [];
 
     const getGames = (cursor, historyGames = []) => {
-        if (page < 10) {  // max number of pages to fetch (total 1468 ca)
+        if (page < pagesToFetch) {  // max number of pages to fetch (total 1468 ca)
             try {
+                console.log('page', page);
                 // recursion to get all historical data
-                setTimeout(() => {  // timeout to avoid 429 (Too Many Request)
-                    return API.get(cursor ? cursor : historyEndpoint)
-                        .then(response => response.json()) 
-                        .then(results => {
-                            if (results.data.length < 1) return historyGames;
-                            historyGames.push.apply(historyGames, results.data);
-                            setGames(games => [...games, historyGames].flat());
-                            page += 1;
-                            return getGames(results.cursor, historyGames);
-                        });
-                    }, 1);  // 30 or 40 is the limit to make it work, too slow...
+                return API.get(cursor ? cursor : historyEndpoint)
+                    .then(response => response.json()) 
+                    .then(results => {
+                        if (results.data.length < 1) return historyGames;
+                        historyGames.push.apply(historyGames, results.data);
+                        setGames(games => [...games, historyGames].flat());
+                        page += 1;
+                        console.log('historyGames:', historyGames);
+                        for (let game of historyGames) {
+                            if (!allTimePlayers.some(player => player.name === game.playerA.name)) {
+                                allTimePlayers.push({'name': game.playerA.name, 'totGames': 0, 'wins': 0, 'winRatio': 0, 'mostPlayed': 'rock'})
+                            }
+                            if (!allTimePlayers.some(player => player.name ===game.playerB.name)) {
+                                allTimePlayers.push({'name': game.playerB.name, 'totGames': 0, 'wins': 0, 'winRatio': 0, 'mostPlayed': 'scissors'})
+                            }
+                            
+                        }
+                        return getGames(results.cursor, historyGames);
+                    });
             } catch (err) {
                 console.error(err);
             }
-            console.log('page', page);
-        }
+        }         
+        setPlayers(players => allTimePlayers.filter(player => !players.includes(player)));
+        console.log('allTimePlayers', allTimePlayers);
+        console.log('players', players);
     }
 
-    const getPlayers = () => {
-        if (games) {
-            games.map((game) => {
-                if (!players.includes(game.playerA.name)) {
-                    setPlayers(players => [...players, game.playerA.name]);
+    const compareHands = (playerA, playerB) => {
+        switch(playerA+playerB) {
+            case 'SCISSORSPAPER':
+            case 'ROCKSCISSORS':
+            case 'PAPERROCK':
+                return 'won';
+            case 'PAPERSCISSORS':
+            case 'SCISSORSROCK':
+            case 'ROCKPAPER':
+                return 'lost';
+            case 'SCISSORSSCISSORS':
+            case 'PAPERPAPER':
+            case 'ROCKROCK':
+                return 'DRAW';
+            default: return 'unknown';
                 }
-                if (!players.includes(game.playerB.name)) {
-                    setPlayers(players => [...players, game.playerB.name]);
-                }
-                return true; 
-            })
-        }
-    }
+    };
 
-    const compareHands = (player, opponent) => {
-        switch(player) {
-            case 'ROCK':
-            switch(opponent) {
-                    case 'ROCK':
-                        return 'draw';
-                    case 'PAPER':
-                        return 'lost';
-                    case 'SCISSORS':
-                        return 'won'
-                    default: return 'result unknown'   
-                }
-            case 'PAPER':
-                switch(opponent) {
-                    case 'ROCK':
-                        return 'won';
-                    case 'PAPER':
-                        return 'draw';
-                    case 'SCISSORS':
-                        return 'lost';
-                    default: return 'result unknown' 
-                }
-            case 'SCISSORS':
-                switch(opponent) {
-                    case 'ROCK':
-                        return 'lost';
-                    case 'PAPER':
-                        return 'won';
-                    case 'SCISSORS':
-                        return 'draw';
-                    default: return 'result unknown' 
-                }
-            default: return 'result unknown' 
-        }
-    }
 
     useEffect(() => {
         getGames();
+        console.log('match:', compareHands('ROCK', 'PAPER'));
     }, []);
 
     // const playerStats = (player) => {
-    //     let games = [];
+
     //     let totGames = 0;
     //     let won = 0;
     //     let lost = 0;
@@ -101,7 +85,7 @@ const History = () => {
     //     let scissors = 0;
     //     let rock = 0;
     //     let paper = 0;
-    //     let resultsJson = API.get(historyEndpoint);
+
     //     resultsJson.then((data) => {
     //         for (let game of data.data) {
     //             if (game.playerA.name === player ||
@@ -137,48 +121,36 @@ const History = () => {
     // }
 
     return (
-        <div className="history">
-            <p> Players:</p>
-            {/* <select defaultValue={'DEFAULT'}
-                onChange={(e) => {
-                setPlayerChosen(e.target.value);
-            }}>
-                <option key="default" value="DEFAULT" disabled>
-                    Select player*
-                </option>
-                {players.map(obj => {
-                    return (
-                <option key={obj} value={obj}>
-                    {obj}
-                </option>
-                );
-                })}
-            </select> */}
-            {/* {playerChosen ? <PlayerStatsCard name={playerChosen} gamesCount={games} wins={games} winRatio={games} mostPlayed={games}/> : <div></div>} */}
-            <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Player</th>
-                        <th>Total games</th>
-                        <th>Wins</th>
-                        <th>Win ration</th>
-                        <th>Most played</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {games ? (games.map((game, i) => {
-                        return (<tr key={i}>
-                        <td>---</td>
-                        <td>{game ? game.playerA.name : '---'}</td>
-                        <td>3</td>
-                        <td>0.33</td>
-                        <td>0.3</td>
-                        <td><img src={paper}alt='paper'></img></td>
-                        </tr>)
-                    })) : 'unknown'}
-                </tbody>
-            </Table>
+        <div className="main">
+            <div className="history">
+                <h2>Games played: {games.length}</h2>
+                <h2>Players in total: {players.length}</h2>
+                <h3>[Fetched pages:{pagesToFetch}]</h3>
+                <Table striped bordered hover size="sm" className='history_table'>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Player</th>
+                            <th>Total games</th>
+                            <th>Wins</th>
+                            <th>Win ration</th>
+                            <th>Most played</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {players ? (players.map((player, i) => {
+                            return (<tr key={i}>
+                            <td>{i+1}</td>
+                            <td>{player ? player.name : '---'}</td>
+                            <td>{player ? player.totGames : '---'}</td>
+                            <td>{player ? player.wins : '---'}</td>
+                            <td>{player ? player.winRatio : '---'}</td>
+                            <td><img src={(player.mostPlayed==='rock') ? rock : (player.mostPlayed==='scissors') ? scissors : (player.mostPlayed==='paper') ? paper : 'unknown'} alt={player.mostPlayed}/></td>
+                            </tr>)
+                        })) : 'unknown'}
+                    </tbody>
+                </Table>
+            </div>
         </div>
     );
 };
