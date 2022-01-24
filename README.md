@@ -2,6 +2,9 @@
 
 A pre-assignment for Reaktor summer 2022 developer 
 
+Link to live site:
+https://festive-curran-ea684c.netlify.app/
+
 
 ### Task
 
