@@ -44,7 +44,7 @@ h1 {
 .history {
   display: flex;
   flex-direction: column;
-  width: 60vw;
+  max-width: 60vw;
 }
 
 .history h2,
@@ -72,7 +72,7 @@ td img {
 .live_games {
   display: flex;
   flex-direction: column;
-  max-width: 40vw;
+  width: 30vw;
 }
 
 .live_table {
@@ -92,4 +92,10 @@ td img {
 
 .footer p {
  margin: 1rem;
+}
+
+@media screen and (max-width:414px) {
+  .main {
+    flex-direction: column;
+  }
 }
