@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import Table from 'react-bootstrap/Table';
 
-const webSocketUrl = 'ws://bad-api-assignment.reaktor.com/rps/live';
+const webSocketUrl = 'wss://bad-api-assignment.reaktor.com/rps/live';
 
 const LiveGames = () => {
     const [liveGames, setLiveGames] = useState([]);
